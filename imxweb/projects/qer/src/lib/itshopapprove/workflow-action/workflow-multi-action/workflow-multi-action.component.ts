@@ -78,7 +78,7 @@ export class WorkflowMultiActionComponent implements OnInit {
   constructor(
     private readonly stepService: DecisionStepSevice,
     private readonly approvalService: ApprovalsService,
-  ) {}
+  ) { }
 
   /**
    * @ignore since this is only an internal component
@@ -89,9 +89,17 @@ export class WorkflowMultiActionComponent implements OnInit {
     this.stepService.isEscalationApprover = this.data.isInEscalationView ?? false;
     const isBusy = this.busyService.beginBusy();
     try {
-      this.requests = await Promise.all(this.data.requests.map(async (item) => this.buildSingleItem(item as Approval)));
+      this.requests = await Promise.all(
+        this.data.requests.map(async (item) => this.buildSingleItem(item as Approval))
+      );
     } finally {
       isBusy.endBusy();
+      /**
+       * INC0156298 & INC0156410 & INC0158639
+       * Sebastian Kanitz; Intragen
+       * Reload form to check validity 
+       */
+      this.formGroup.updateValueAndValidity();
     }
   }
 
