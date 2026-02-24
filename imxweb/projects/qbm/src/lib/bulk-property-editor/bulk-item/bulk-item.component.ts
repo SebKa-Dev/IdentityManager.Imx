@@ -90,6 +90,12 @@ export class BulkItemComponent implements OnInit {
       this.setIconStyle();
       this.bulkItem.readonly = this.bulkItem.properties.every((p) => p.isReadOnly());
       this.bulkItem.mandatory = this.bulkItem.properties.some((p) => p.column.GetMetadata().GetMinLength() > 0);
+
+      if (!this.bulkItem.mandatory) {
+          this.bulkItem.status = BulkItemStatus.saved;
+          this.setIconStyle();
+      }
+
     });
   }
 

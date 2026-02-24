@@ -5,6 +5,7 @@
       [bulkItem]="entity"
       (saveItem)="handleAction($event, true)"
       (skipItem)="handleAction($event, false)"
+      [expanded]="i === 0"
       [hideButtons]="hideButtons"
       (validationStateChanged)="validationStateChanged.emit($event)"
       (controlCreated)="formGroup.addControl('bulk-item' + i, $event)"
